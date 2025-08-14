@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                   // Modern JS features
+    "module": "commonjs",                 // Node.js default
+    "rootDir": "src",                     // Your source files
+    "outDir": "dist",                     // Compiled JS output
+    "strict": true,                       // Enable all strict type-checking
+    "esModuleInterop": true,              // ✅ Allows import x from 'module' syntax
+    "allowSyntheticDefaultImports": true, // ✅ Needed for default imports of CommonJS modules
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true                  // Speeds up compilation by skipping type checks of dependencies
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
