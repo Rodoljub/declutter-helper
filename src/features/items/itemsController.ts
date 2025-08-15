@@ -9,10 +9,17 @@ export const itemController = {
       const { name, category, photoUrl, notes } = req.body;
 
       if (!name || !category) {
-        return res.status(400).json({ message: "Name and category are required" });
+        return res
+          .status(400)
+          .json({ message: "Name and category are required" });
       }
 
-      const item = await itemService.createItem(userId, { name, category, photoUrl, notes });
+      const item = await itemService.createItem(userId, {
+        name,
+        category,
+        photoUrl,
+        notes,
+      });
       return res.status(201).json(item);
     } catch (err) {
       console.error(err);
@@ -31,6 +38,35 @@ export const itemController = {
     }
   },
 
+  getItem: async (req: Request, res: Response) => {
+    const { itemId } = req.params;
+    try {
+      const item = await itemService.getItemById(Number(itemId));
+      if (!item) {
+        return res.status(404).json({ message: "Item not found" });
+      }
+      res.json(item);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    }
+  },
+  updateItem: async (req: Request, res: Response) => {
+    const { itemId } = req.params;
+    const { name, category } = req.body;
+
+    try {
+      const updatedItem = await itemService.updateItem(Number(itemId), {
+        name,
+        category,
+      });
+      res.json(updatedItem);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    }
+  },
+
   updateDecision: async (req: Request, res: Response) => {
     try {
       const { itemId } = req.params;
@@ -40,7 +76,11 @@ export const itemController = {
         return res.status(400).json({ message: "Invalid decision value" });
       }
 
-      const updatedItem = await itemService.updateDecision(Number(itemId), decision, notes);
+      const updatedItem = await itemService.updateDecision(
+        Number(itemId),
+        decision,
+        notes
+      );
       return res.json(updatedItem);
     } catch (err) {
       console.error(err);
@@ -55,7 +95,9 @@ export const itemController = {
       return res.json(history);
     } catch (err) {
       console.error(err);
-      return res.status(500).json({ message: "Failed to fetch decision history" });
+      return res
+        .status(500)
+        .json({ message: "Failed to fetch decision history" });
     }
   },
 };

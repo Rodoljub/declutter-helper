@@ -26,6 +26,20 @@ export const itemService = {
     });
   },
 
+  
+  getItemById: async (itemId: number) => {
+    return prisma.item.findUnique({
+      where: { id: itemId },
+    });
+  },
+
+  updateItem: async (id: number, data: { name: string; category: string }) => {
+  return prisma.item.update({
+    where: { id },
+    data,
+  });
+},
+
   updateDecision: async (itemId: number, decision: Decision, notes?: string) => {
     const updatedItem = await prisma.item.update({
       where: { id: itemId },

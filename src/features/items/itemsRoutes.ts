@@ -8,6 +8,8 @@ const router = Router();
 // Protect all routes
 router.use(authMiddleware);
 
+
+
 router.post(
   "/",
   [
@@ -18,6 +20,20 @@ router.post(
 );
 
 router.get("/", itemController.listItems);
+
+router.get(
+  "/:itemId",
+  itemController.getItem
+);
+
+router.put(
+  "/:itemId",
+  [
+    body("name").notEmpty().withMessage("Name is required"),
+    body("category").notEmpty().withMessage("Category is required"),
+  ],
+  itemController.updateItem
+);
 
 router.patch(
   "/:itemId/decision",
