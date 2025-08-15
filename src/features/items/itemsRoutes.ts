@@ -19,7 +19,7 @@ router.post(
 
 router.get("/", itemController.listItems);
 
-router.put(
+router.patch(
   "/:itemId/decision",
   [
     body("decision").notEmpty().withMessage("Decision is required"),
