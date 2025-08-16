@@ -35,6 +35,9 @@ router.put(
   itemController.updateItem
 );
 
+router.delete("/:itemId", itemController.deleteItem);
+
+
 router.patch(
   "/:itemId/decision",
   [

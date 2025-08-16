@@ -67,10 +67,24 @@ export const itemController = {
     }
   },
 
+  deleteItem: async (req: Request, res: Response) => {
+  try {
+    const { itemId } = req.params;
+    await itemService.deleteItem(Number(itemId));
+    res.status(204).send();
+  } catch (error) {
+    console.error(error); 
+    res.status(500).json({ error: "Failed to delete item" });
+  }
+},
+
+
   updateDecision: async (req: Request, res: Response) => {
     try {
       const { itemId } = req.params;
-      const { decision, notes } = req.body;
+      let { decision, notes } = req.body;
+
+      decision = (decision || '').toUpperCase();
 
       if (!Object.values(Decision).includes(decision)) {
         return res.status(400).json({ message: "Invalid decision value" });

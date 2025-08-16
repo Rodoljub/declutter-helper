@@ -40,6 +40,13 @@ export const itemService = {
   });
 },
 
+deleteItem: async (itemId: number) => {
+    // Delete all related DecisionRecords first
+  await prisma.decisionRecord.deleteMany({ where: { itemId } });
+  return prisma.item.delete({ where: { id: itemId } });
+},
+
+
   updateDecision: async (itemId: number, decision: Decision, notes?: string) => {
     const updatedItem = await prisma.item.update({
       where: { id: itemId },

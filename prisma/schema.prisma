@@ -27,7 +27,7 @@ model DecisionRecord {
   id        Int      @id @default(autoincrement())
   type      Decision
   notes     String?
-  item      Item     @relation(fields: [itemId], references: [id])
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
   itemId    Int
   createdAt DateTime @default(now())
 }
@@ -50,10 +50,10 @@ model Item {
   category   String
   photoUrl   String?
   notes      String?
-  decision   Decision  @default(UNDECIDED)
+  decision   Decision?
   decidedAt  DateTime?
   reviewDate DateTime?
   createdAt  DateTime  @default(now())
 
-  decisions DecisionRecord[]
+  decisions DecisionRecord[] 
 }
