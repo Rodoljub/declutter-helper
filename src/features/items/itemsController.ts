@@ -114,4 +114,26 @@ export const itemController = {
         .json({ message: "Failed to fetch decision history" });
     }
   },
+
+  getDecisionStats: async (req: Request, res: Response) => {
+  const userId = Number(req.user!.id); // or get from auth token
+
+  try {
+    const stats = await itemService.getDecisionStats(userId);
+    res.json({ success: true, stats });
+  } catch (err: any) {
+    res.status(400).json({ success: false, message: err.message });
+  }
+},
+getDailyDecisionStats: async (req: Request, res: Response) => {
+  const userId = Number(req.user!.id);
+  const days = Number(req.query.days) || 7;
+
+  try {
+    const stats = await itemService.getDailyDecisionStats(userId, days);
+    res.json({ success: true, stats });
+  } catch (err: any) {
+    res.status(400).json({ success: false, message: err.message });
+  }
+}
 };

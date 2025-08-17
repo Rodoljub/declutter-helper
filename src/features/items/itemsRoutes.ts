@@ -8,7 +8,10 @@ const router = Router();
 // Protect all routes
 router.use(authMiddleware);
 
+router.get("/stats", itemController.getDecisionStats);
 
+// features/items/itemsRoutes.ts
+router.get("/stats/daily", itemController.getDailyDecisionStats);
 
 router.post(
   "/",
@@ -47,5 +50,8 @@ router.patch(
 );
 
 router.get("/:itemId/history", itemController.getDecisionHistory);
+
+
+
 
 export default router;
